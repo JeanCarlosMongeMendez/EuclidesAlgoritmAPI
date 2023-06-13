@@ -43,3 +43,16 @@ class Connection:
         data = pd.read_sql(query, cnxn)
         del cnxn
         return data
+
+    def get_users_by_inteligence(self, inteligence):
+        cnxn = pyodbc.connect(cnxn_str)
+        query = ("SELECT id, username, inteligence "
+                 "FROM dbo.users "
+                 f"WHERE inteligence = '{inteligence}' "
+                 "UNION "
+                 "(SELECT id, username, inteligence "
+                 "FROM dbo.users "
+                 f"WHERE inteligence <> '{inteligence}')")
+        data = pd.read_sql(query, cnxn)
+        del cnxn
+        return data

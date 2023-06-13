@@ -42,6 +42,15 @@ def get_users():
     parsed = loads(res)
     return parsed, 200
 
+@app.route("/users/inteligence/", methods = ['GET'])
+def get_users_by_inteligence():
+    args = request.args
+    conn = Connection()
+    df = conn.get_users_by_inteligence(args.get("inteligence"))
+    res = df.to_json(orient="records")
+    parsed = loads(res)
+    return parsed, 200
+
 @app.route("/users/", methods = ['POST'])
 def add_user():
     data = request.json
